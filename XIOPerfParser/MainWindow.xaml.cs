@@ -28,7 +28,7 @@ namespace XIOPerfParser
             InitializeComponent();
         }
 
-
+        //Parse for stdout result
         void ParseStdOut(string logPath)
         {
             System.IO.FileStream sFile = new System.IO.FileStream(logPath, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.ReadWrite);
@@ -36,7 +36,6 @@ namespace XIOPerfParser
             sFile.Seek(0, SeekOrigin.Begin);
             objReader = new StreamReader(sFile);
             string sLine = string.Empty;
-
 
             StreamWriter objConfigOutputWriter = null;
             StreamWriter objIOPSOutputWriter = null;
@@ -64,7 +63,6 @@ namespace XIOPerfParser
                 string record = string.Empty;
                 if (sLine.Contains("WorkUnit Name: XStream"))
                 {
-
                     sLine = objReader.ReadLine();
                     while (!sLine.Contains("Queue Depth:"))
                     {
@@ -108,16 +106,18 @@ namespace XIOPerfParser
 
                     objIOPSOutputWriter.WriteLine(IOPS);
                     objTHOutputWriter.WriteLine(TH);
-
                 }
-                else sLine = objReader.ReadLine();
+                else
+                {
+                    sLine = objReader.ReadLine();
+                }
             }
-
             objConfigOutputWriter.Close();
             objIOPSOutputWriter.Close();
             objTHOutputWriter.Close();
         }
 
+        //Parse for csv result
         void ParseCsv(string logPath)
         {
             System.IO.FileStream sFile = new System.IO.FileStream(logPath, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.ReadWrite);
@@ -132,10 +132,7 @@ namespace XIOPerfParser
             string QuantileFile = outputPath + @"\quantile.txt";
 
             System.IO.FileStream sQuantileFile = new System.IO.FileStream(QuantileFile, System.IO.FileMode.Create, System.IO.FileAccess.Write, FileShare.ReadWrite);
-
-
             objQuantileWriter = new StreamWriter(sQuantileFile);
-
 
             sLine = objReader.ReadLine();
             while (sLine != null)
@@ -150,10 +147,10 @@ namespace XIOPerfParser
                 }
                 else sLine = objReader.ReadLine();
             }
-
             objQuantileWriter.Close();
         }
 
+        //Parse IOPS and TH
         void ParseIOPSTH(string sLine, out string IOPS, out string TH)
         {
             string reco = string.Empty;
@@ -168,14 +165,13 @@ namespace XIOPerfParser
             //Parse TH
             string[] da2 = data[2].Split(':');
             TH = da2[1];
-
         }
 
+        //Parse Quantile
         void ParseQuantile(string sLine, out string quantile)
         {
             int startindex = sLine.IndexOf("Quant:");
             quantile = sLine.Substring(startindex + ("Quant:").Length);
-
         }
 
         private void Parsestdout_Click(object sender, RoutedEventArgs e)
@@ -199,7 +195,7 @@ namespace XIOPerfParser
             }
             string csvLogPath = (string)csvPath.Text;
             ParseCsv(csvLogPath);
-            System.Diagnostics.Process.Start("Explorer.exe",ResultPath.Text);
+            System.Diagnostics.Process.Start("Explorer.exe", ResultPath.Text);
         }
 
         private void stdoutFileSelectButton_Click(object sender, RoutedEventArgs e)
@@ -210,7 +206,6 @@ namespace XIOPerfParser
             openFileDialog.ShowDialog();
             if (openFileDialog.FileName == string.Empty)
             {
-                //MessageBox.Show("Select stdout file path");
                 return;
             }
             stdoutPath.Text = openFileDialog.FileName;
@@ -225,7 +220,6 @@ namespace XIOPerfParser
             openFileDialog.ShowDialog();
             if (openFileDialog.FileName == string.Empty)
             {
-                //MessageBox.Show("Select csv file path");
                 return;
             }
             csvPath.Text = openFileDialog.FileName;
