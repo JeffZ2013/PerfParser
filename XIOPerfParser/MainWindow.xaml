@@ -1,0 +1,18 @@
+﻿<Window x:Class="XIOPerfParser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="XIOPerfLogParser" Height="322" Width="760" FontSize="15">
+    <Grid>
+        <Label Content="stdout" HorizontalAlignment="Left" Margin="48,48,0,0" VerticalAlignment="Top"/>
+        <Label Content="csv" HorizontalAlignment="Left" Margin="66,111,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="101,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="456" Name="stdoutPath"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="102,111,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="455" Name="csvPath"/>
+        <Label Content="Result Path" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="99,185,0,0" TextWrapping="Wrap" Text="C:\tests" VerticalAlignment="Top" Width="112" Name="ResultPath"/>
+        <Button Content="Parse" HorizontalAlignment="Left" Margin="618,50,0,0" VerticalAlignment="Top" Width="75" Name="Parsestdout" Click="Parsestdout_Click"/>
+        <Button Content="Parse" HorizontalAlignment="Left" Margin="620,110,0,0" VerticalAlignment="Top" Width="75" Name="Parsecsv" Click="Parsecsv_Click" />
+        <Button Content="..." HorizontalAlignment="Left" Margin="571,52,0,0" VerticalAlignment="Top" Width="32" RenderTransformOrigin="-0.118,0.55" Name="stdoutFileSelectButton" Click="stdoutFileSelectButton_Click"/>
+        <Button Content="..." HorizontalAlignment="Left" Margin="571,111,0,0" VerticalAlignment="Top" Width="32" RenderTransformOrigin="-0.118,0.55" Name="csvFileSelectButton" Click="csvFileSelectButton_Click"/>
+
+    </Grid>
+</Window>
